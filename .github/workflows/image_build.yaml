@@ -122,7 +122,7 @@ jobs:
           VERSION: ${{ steps.time.outputs.time }}
         run: |
           sudo mv -v /home/runner/work/plasma-mobile/plasma-mobile/arm-profiles /usr/share/manjaro-arm-tools/profiles
-          sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -s plasma-mobile -o
+          sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -s plasma-mobile -k mobile
           
           ls -lasih /var/cache/manjaro-arm-tools/img
           
