@@ -128,7 +128,7 @@ jobs:
           FILE_PATH=$(find /var/cache/manjaro-arm-tools/img -type f -name "*.img.xz" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
           cp -v $FILE_PATH .
           
-          sha256sum $FILE_PATH > $(basename $FILE_PATH).sha256
+          sha256sum $(basename $FILE_PATH) > $(basename $FILE_PATH).sha256
 
           echo "FILE_PATH=$(basename $FILE_PATH)" >> $GITHUB_ENV
           echo "FILE_SHA256=$(basename $FILE_PATH).sha256" >> $GITHUB_ENV
