@@ -110,7 +110,7 @@ jobs:
           VERSION: beta3
         run: |
           sudo mv -v /home/runner/work/$EDITION/$EDITION/arm-profiles /usr/share/manjaro-arm-tools/profiles
-          sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -k mobile
+          sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -s plasma-mobile -k mobile
           
           FILE_PATH=$(find /var/cache/manjaro-arm-tools/img -type f -name "*.img.xz" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
           cp -v $FILE_PATH .
