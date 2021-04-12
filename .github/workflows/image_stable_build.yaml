@@ -16,8 +16,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: beta3
-          release_name: Release Beta3
+          tag_name: beta4
+          release_name: Release Beta4
           draft: false
           prerelease: false
     outputs:
