@@ -107,7 +107,7 @@ jobs:
         env:
           EDITION: ${{ matrix.EDITION }}
           BRANCH: ${{ matrix.BRANCH }}
-          VERSION: beta3
+          VERSION: beta4
         run: |
           sudo mv -v /home/runner/work/$EDITION/$EDITION/arm-profiles /usr/share/manjaro-arm-tools/profiles
           sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -s plasma-mobile -k mobile
