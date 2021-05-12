@@ -109,7 +109,7 @@ jobs:
           sudo sed -i -e 's|2>/dev/null||g' /usr/share/manjaro-arm-tools/lib/functions.sh 
       - 
         name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
         with:
           repository: manjaro-pinephone/arm-profiles
           token: "${{ secrets.GITHUB_TOKEN }}"

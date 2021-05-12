@@ -108,7 +108,7 @@ jobs:
           sudo sed -i -e 's|echo "No OEM setup!"|echo "No OEM setup!"\nsed -i -e "s/unstable/stable/g" $ROOTFS_IMG/rootfs_$ARCH/etc/pacman-mirrors.conf\nsed -i -e "s/unstable/stable/g" $ROOTFS_IMG/rootfs_$ARCH/etc/pacman.d/mirrorlist|g' /usr/share/manjaro-arm-tools/lib/functions.sh
       - 
         name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
         with:
           repository: manjaro-pinephone/arm-profiles
           token: "${{ secrets.GITHUB_TOKEN }}"
