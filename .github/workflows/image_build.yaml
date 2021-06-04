@@ -1,6 +1,8 @@
 name: image_build
 on:
   workflow_dispatch:
+  schedule:
+    - cron:  '30 2 * * *'
 
 jobs:
   prepare_release:
@@ -11,13 +13,18 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - 
+        id: time
+        uses: nanzm/get-time-action@v1.1
+        with:
+          format: 'YYYYMMDDHHmm'
+      - 
         id: release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: beta5
-          release_name: Beta 5
+          tag_name: ${{ steps.time.outputs.time }}
+          release_name: Release ${{ steps.time.outputs.time }}
           draft: false
           prerelease: false
     outputs:
