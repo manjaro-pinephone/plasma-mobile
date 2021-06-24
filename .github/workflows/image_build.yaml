@@ -37,7 +37,7 @@ jobs:
     strategy:
       matrix:
         EDITION: [plasma-mobile]
-        BRANCH: [testing]
+        BRANCH: [stable]
     steps:
       - 
         uses: styfle/cancel-workflow-action@0.8.0
