@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
-        uses: styfle/cancel-workflow-action@0.8.0
+        uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
       - 
@@ -19,7 +19,7 @@ jobs:
           format: 'YYYYMMDDHHmm'
       - 
         id: release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -40,7 +40,7 @@ jobs:
         BRANCH: [unstable]
     steps:
       - 
-        uses: styfle/cancel-workflow-action@0.8.0
+        uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
       - 
@@ -48,93 +48,20 @@ jobs:
         uses: nanzm/get-time-action@v1.1
         with:
           format: 'YYYYMMDD'
-      -
-        name: install-arm-tools
-        run: |
-          sudo apt-get update
-          sudo apt install gdisk zip systemd-container bmap-tools asciidoc libarchive-tools git build-essential cmake libarchive-dev pkg-config libcurl4-openssl-dev libgpgme-dev libssl-dev fakeroot dh-autoreconf qemu-utils qemu-efi-aarch64 qemu-system-arm qemu-user-static
-          
-          sudo git clone https://gitlab.manjaro.org/packages/core/pacman.git
-          cd pacman
-          sudo wget https://sources.archlinux.org/other/pacman/pacman-5.2.2.tar.gz
-          sudo tar -xvf pacman-5.2.2.tar.gz
-          cd pacman-5.2.2
-          sudo patch -p1 -i ../pacman-sync-first-option.patch
-          sudo ./configure --prefix=/usr --sysconfdir=/etc \
-            --localstatedir=/var --enable-doc \
-            --with-scriptlet-shell=/usr/bin/bash \
-            --with-ldconfig=/usr/bin/ldconfig
-          sudo make V=1
-          sudo make install
-          cd ..
-          sudo install -m644 pacman.conf /etc/pacman.conf
-          sudo install -m644 makepkg.conf /etc/
-          sudo mkdir -p /etc/pacman.d
-          sudo touch /etc/pacman.d/mirrorlist
-          cd ..
-          
-          sudo wget https://gitlab.manjaro.org/packages/community/manjaro-arm-qemu-static/-/raw/master/qemu-static.conf -O /usr/lib/binfmt.d/qemu-static.conf
-          sudo service systemd-binfmt restart
-          
-          pkgver=23
-          sudo wget https://git.archlinux.org/arch-install-scripts.git/snapshot/arch-install-scripts-$pkgver.tar.gz
-          sudo tar -xvf arch-install-scripts-$pkgver.tar.gz
-          sudo make -C arch-install-scripts-$pkgver
-          sudo make -C arch-install-scripts-$pkgver check
-          sudo make -C arch-install-scripts-$pkgver PREFIX=/usr install
-
-          sudo git clone https://gitlab.manjaro.org/manjaro-arm/applications/manjaro-arm-tools.git
-
-          install_m_a_tools() {
-              pkgname=manjaro-arm-tools
-              sudo install -dm777 /usr/share/$pkgname/lib
-              sudo install -dm777 /usr/share/$pkgname/profiles
-              sudo install -d /etc/$pkgname/
-              sudo install -dm777 /var/lib/$pkgname/{pkg,img,tmp,profiles}
-              sudo install -dm777 /var/cache/$pkgname/{pkg/pkg-cache,img}
-              sudo install -Dm755 $pkgname/lib/* /usr/share/$pkgname/lib/
-              sudo install -Dm755 $pkgname/bin/* /usr/bin/
-              sudo install -Dm755 $pkgname/lib/manjaro-arm-tools.conf /etc/manjaro-arm-tools/
-          }
-          install_m_a_tools
-          
-          sudo sed -i -e 's|1>/dev/null||g' /usr/share/manjaro-arm-tools/lib/functions.sh   
-          sudo sed -i -e 's|1> /dev/null 2>&1||g' /usr/share/manjaro-arm-tools/lib/functions.sh
-          sudo sed -i -e 's|2>/dev/null||g' /usr/share/manjaro-arm-tools/lib/functions.sh 
       - 
-        name: checkout
-        uses: actions/checkout@v2
+        id: image-build
+        uses: manjaro-arm/rootfs@master
         with:
-          repository: manjaro-pinephone/arm-profiles
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          path: 'arm-profiles'          
-      -
-        name: build
-        env:
-          EDITION: ${{ matrix.EDITION }}
-          BRANCH: ${{ matrix.BRANCH }}
-          VERSION: ${{ steps.time.outputs.time }}
-        run: |
-          sudo mv -v /home/runner/work/plasma-mobile/plasma-mobile/arm-profiles /usr/share/manjaro-arm-tools/profiles
-          sudo buildarmimg -d pinephone -e $EDITION -v $VERSION -b $BRANCH -s plasma-mobile -k mobile
-          
-          ls -lasih /var/cache/manjaro-arm-tools/img
-          
-          FILE_PATH=$(find /var/cache/manjaro-arm-tools/img -type f -name "*.img.xz" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
-          cp -v $FILE_PATH .
-          
-          sha256sum $FILE_PATH > $(basename $FILE_PATH).sha256
-
-          echo "FILE_PATH=$(basename $FILE_PATH)" >> $GITHUB_ENV
-          echo "FILE_SHA256=$(basename $FILE_PATH).sha256" >> $GITHUB_ENV
-          
-          FILE_PKG=$(find /var/cache/manjaro-arm-tools/img -type f -name "*-pkgs.txt" -exec stat -c '%Y %n' {} \; | sort -nr | awk 'NR==1 {print $2}')
-          cp -v $FILE_PKG .
-
-          echo "FILE_PKG=$(basename $FILE_PKG)" >> $GITHUB_ENV
+          device: ${{ matrix.device }}
+          edition: ${{ matrix.edition }}
+          branch: ${{ matrix.branch }}
+          version: ${{ steps.time.outputs.time }}
+          #CI_PUB_KEY: "${{ secrets.CI_PUB_KEY }}"
+          #CI_GPG_SECRET: "${{ secrets.CI_GPG_SECRET }}"
+          #CI_GPG_PASSPHRASE: "${{ secrets.CI_GPG_PASSPHRASE }}"
       - 
         id: upload_release 
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -144,7 +71,7 @@ jobs:
           asset_content_type: application/x-iso-image
       - 
         id: upload_sha256
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -154,7 +81,7 @@ jobs:
           asset_content_type: text/plain
       - 
         id: upload_pkg
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
