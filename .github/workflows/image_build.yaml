@@ -72,14 +72,14 @@ jobs:
           asset_name: ${{ env.FILE_PATH }}
           asset_content_type: application/x-iso-image
       - 
-        id: upload_sha256
+        id: upload_sha1
         uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.prepare_release.outputs.upload_url }}
-          asset_path: ./${{ env.FILE_SHA256 }}
-          asset_name: ${{ env.FILE_SHA256 }}
+          asset_path: ./${{ env.FILE_SHA1 }}
+          asset_name: ${{ env.FILE_SHA1 }}
           asset_content_type: text/plain
       - 
         id: upload_pkg
