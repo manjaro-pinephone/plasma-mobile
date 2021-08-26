@@ -1,8 +1,6 @@
 name: image_stable_build
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '30 2 * * *'
 
 jobs:
   prepare_release:
