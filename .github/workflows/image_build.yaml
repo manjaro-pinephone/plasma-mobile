@@ -26,7 +26,7 @@ jobs:
           tag_name: ${{ steps.time.outputs.time }}
           release_name: Release ${{ steps.time.outputs.time }}
           draft: false
-          prerelease: false
+          prerelease: true
     outputs:
       upload_url: ${{ steps.release.outputs.upload_url }}
       release_id: ${{ steps.release.outputs.id }}
