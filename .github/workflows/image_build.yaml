@@ -1,8 +1,8 @@
 name: image_build
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '30 2 * * *'
+#  schedule:
+#    - cron:  '30 2 * * *'
 
 jobs:
   prepare_release:
@@ -36,9 +36,9 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        DEVICE: [pinephone]
+        DEVICE: [pinephone,pinephonepro]
         EDITION: [plasma-mobile]
-        BRANCH: [unstable]
+        BRANCH: [testing]
     steps:
       - 
         uses: styfle/cancel-workflow-action@0.9.1
