@@ -59,6 +59,7 @@ jobs:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
           version: factory-${{ steps.time.outputs.time }}
+          factory: ${{ matrix.factory }}
           #CI_PUB_KEY: "${{ secrets.CI_PUB_KEY }}"
           #CI_GPG_SECRET: "${{ secrets.CI_GPG_SECRET }}"
           #CI_GPG_PASSPHRASE: "${{ secrets.CI_GPG_PASSPHRASE }}"
