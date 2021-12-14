@@ -16,8 +16,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: beta8
-          release_name: Release Beta 8
+          tag_name: beta9
+          release_name: Beta 9
           draft: false
           prerelease: false
     outputs:
@@ -29,7 +29,7 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        DEVICE: [pinephone]
+        DEVICE: [pinephone,pinephonepro]
         EDITION: [plasma-mobile]
         BRANCH: [stable]
     steps:
@@ -45,7 +45,7 @@ jobs:
           device: ${{ matrix.device }}
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
-          version: beta8
+          version: beta9
           #CI_PUB_KEY: "${{ secrets.CI_PUB_KEY }}"
           #CI_GPG_SECRET: "${{ secrets.CI_GPG_SECRET }}"
           #CI_GPG_PASSPHRASE: "${{ secrets.CI_GPG_PASSPHRASE }}"
