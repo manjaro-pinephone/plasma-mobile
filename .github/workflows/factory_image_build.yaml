@@ -38,7 +38,7 @@ jobs:
       matrix:
         DEVICE: [pinephone,pinephonepro]
         EDITION: [plasma-mobile]
-        BRANCH: [testing]
+        BRANCH: [unstable]
         IMGTYPE: [factory]
     steps:
       - 
