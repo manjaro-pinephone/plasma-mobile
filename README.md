@@ -1,19 +1,19 @@
 # Manjaro Plasma-Mobile
 [![iso_build](https://github.com/manjaro-pinephone/plasma-mobile/workflows/image_build/badge.svg)](https://github.com/manjaro-pinephone/plasma-mobile/actions)
 
-## description
+## Description
 
 Plasma-Mobile of Manjaro Linux for the Pinephone
 
-## where can I download an iso?
+## Where can I download an ISO image?
 
-Images are built and uploaded in a relatively regular interval to [github releases](https://github.com/manjaro-pinephone/plasma-mobile/releases)
+Images are built and uploaded in a relatively regular interval to [github releases](https://github.com/manjaro-pinephone/plasma-mobile/releases).
 
-## sources
+## Sources
 
 - [image profile](https://github.com/manjaro-pinephone/arm-profiles)
 
-## building
+## Building
 
-1. check out the arm-profiles
-2. `sudo buildarmimg -d pinephone -e plasma-mobile -v $DATE -b unstable -k plasma-mobile`
+Step 1. Check out the arm-profiles.
+Step 2. Run the the following command `sudo buildarmimg -d pinephone -e plasma-mobile -v $DATE -b unstable -k plasma-mobile`
