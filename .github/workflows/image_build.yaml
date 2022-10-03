@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
-        uses: styfle/cancel-workflow-action@0.10.0
+        uses: styfle/cancel-workflow-action@0.10.1
         with:
           access_token: ${{ github.token }}
       - 
@@ -41,7 +41,7 @@ jobs:
         BRANCH: [unstable]
     steps:
       - 
-        uses: styfle/cancel-workflow-action@0.10.0
+        uses: styfle/cancel-workflow-action@0.10.1
         with:
           access_token: ${{ github.token }}
       - 
