@@ -38,10 +38,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: beta13
-          name: Beta 13
+          tag_name: beta14-rc1
+          name: Beta 14 RC 1
           draft: false
-          prerelease: false
+          prerelease: true
           files: |
             ${{ env.FILE_PATH }}
             ${{ env.FILE_SHA1 }}
