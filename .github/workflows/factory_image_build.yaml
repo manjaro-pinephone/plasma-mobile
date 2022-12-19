@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: factory-${{ steps.time.outputs.time }}
+          tag_name: factory_${{ steps.time.outputs.time }}
           name: Factory Image ${{ steps.time.outputs.time }}
           draft: false
           prerelease: false
