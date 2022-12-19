@@ -29,7 +29,7 @@ jobs:
           device: ${{ matrix.device }}
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
-          version: beta14-rc2
+          version: beta14
           #gpg-key: ${{ secrets.CI_GPG_SECRET }}
           #gpg-passphrase: ${{ secrets.CI_GPG_PASSPHRASE }}
       -
@@ -38,10 +38,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: beta14-rc2
-          name: Beta 14 RC 2
+          tag_name: beta14
+          name: Beta 14
           draft: false
-          prerelease: true
+          prerelease: false
           files: |
             ${{ env.FILE_PATH }}
             ${{ env.FILE_SHA1 }}
