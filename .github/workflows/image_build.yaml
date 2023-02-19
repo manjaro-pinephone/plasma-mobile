@@ -44,7 +44,7 @@ jobs:
           prerelease: true
           files: |
             ${{ env.FILE_PATH }}
-            ${{ env.FILE_SHA1 }}
+            ${{ env.FILE_SHA256 }}
             ${{ env.FILE_TORRENT }}
             ${{ env.FILE_PKG }}
             #${{ env.FILE_SIG }}
